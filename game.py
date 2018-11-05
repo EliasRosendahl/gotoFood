@@ -27,10 +27,14 @@ while not done:
 
     screen.fill(WHITE)
 
+    for agent in scene.agents:
+        agent.move(scene)
+
     # Draw all agents
     for agent in scene.agents:
-        pygame.draw.circle(screen, BLUE, [agent.x, agent.y], 5)
+        pygame.draw.circle(screen, BLUE, [int(agent.x), int(agent.y)], 5)
 
+    # Draw all food
     for food in scene.food:
         pygame.draw.circle(screen, RED, [food.x, food.y], 5)
 
