@@ -27,8 +27,13 @@ while not done:
 
     screen.fill(WHITE)
 
+    # Move all agents
     for agent in scene.agents:
         agent.move(scene)
+
+    # Spawn new food
+    if len(scene.food) < 10:
+        scene.spawnFood()
 
     # Draw all agents
     for agent in scene.agents:

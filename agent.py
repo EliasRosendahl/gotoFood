@@ -2,7 +2,7 @@ import math
 
 from point import Point
 
-max_distance = 2
+max_distance = 50
 
 
 class Agent(object):
@@ -26,10 +26,24 @@ class Agent(object):
         self.x = self.x + direction.x
         self.y = self.y + direction.y
 
+    def eat(self, food):
+        pass
 
-        print(self.x, self.y, direction.x, direction.y)
 
     def move(self, scene):
+        # Should have findClosets() funtion and not run every frame
+        if len(scene.food) != 0:
+            self.closets = scene.food[0]
         for food in scene.food:
-            self.moveTowards(food.location)
-            break
+            if self.distance(self.closets.location) > self.distance(food.location):
+                self.closets = food
+
+        self.moveTowards(self.closets)
+
+        if self.x == self.closets.location.x and self.y == self.closets.location.y:
+            self.eat(self.closets)
+            scene.food.remove(self.closets)
+
+    def distance(self, target):
+        direction = Point(target.x - self.x, target.y - self.y)
+        return math.sqrt(direction.x ** 2 + direction.y ** 2)
